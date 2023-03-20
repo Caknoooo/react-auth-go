@@ -7,43 +7,35 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 
 function App() {
-  const [name, setName] = useState("");
+  const [nama, setNama] = useState("");
 
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     try {
-  //       const response: Response = await fetch(
-  //         "https://fundraisingbackendrpl-production.up.railway.app/api/user/me",
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-
-  //       if (response.ok) {
-  //         await response.json();
-  //       }
-  //     } catch (error) {
-  //       alert(error);
-  //     }
-  //   };
-
-  //   fetchPost();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/me", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNama(data.nama);
+          console.log(data);
+        })
+        .catch((error) => console.error(error));
+    })();
+  });
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Nav name={name} setName={setName} />
+        <Nav nama={nama} setName={setNama} />
 
         <main className="form-signin">
           <Routes>
-            <Route path="/" Component={() => <Home name={name} />} />
+            <Route path="/" Component={() => <Home nama={nama} />} />
             <Route
               path="/login"
-              Component={() => <Login setName={setName} />}
+              Component={() => <Login setName={setNama} />}
             />
             <Route path="/register" Component={Register} />
           </Routes>

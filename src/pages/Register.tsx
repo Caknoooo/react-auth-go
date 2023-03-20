@@ -12,22 +12,22 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "https://fundraisingbackendrpl-production.up.railway.app/api/user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nama, 
-            no_telp, 
-            email, 
-            password
-          }),
-        }
-      );
-      await response.json();
+      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nama,
+          no_telp,
+          email,
+          password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
       alert('success');
       navigate('/login');
     } catch (error) {

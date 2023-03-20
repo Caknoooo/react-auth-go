@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Nav = (props: { name: string; setName: (name: string) => void }) => {
+const Nav = (props: { nama: string; setName: (nama: string) => void }) => {
   const logout = async () => {
-    await fetch("http://localhost:8000/api/logout", {
+    await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -14,7 +14,7 @@ const Nav = (props: { name: string; setName: (name: string) => void }) => {
 
   let menu;
 
-  if (props.name === "") {
+  if (props.nama === "") {
     menu = (
       <ul className="navbar-nav me-auto mb-2 mb-md-0">
         <li className="nav-item active">

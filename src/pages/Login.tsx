@@ -10,20 +10,20 @@ const Login = (props: { setName: (name: string) => void }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:8888/api/user/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email, 
-            password
-          }),
-        }
-      );
-      await response.json();
+      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/login", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
       alert('Berhasil Login');
     } catch (error) {
       alert(error);
