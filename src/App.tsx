@@ -11,17 +11,18 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/me", {
+      const response = await fetch("http://localhost:8888/api/user/me", {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setNama(data.nama);
-          console.log(data);
-        })
-        .catch((error) => console.error(error));
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      });
+      const responseData = await response.json()
+      if (response.ok) {
+        setNama(responseData.data.nama)
+        console.log("tes")
+      }
     })();
   });
 

@@ -7,13 +7,13 @@ const Register = () => {
   const [no_telp, setNo_telp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     try {
-      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user", {
-        mode: "cors",
+      const response = await fetch("http://localhost:8888/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,21 +23,27 @@ const Register = () => {
           no_telp,
           email,
           password,
+          confirm_password,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
-      alert('success');
-      navigate('/login');
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", responseData.message)
+        console.log(nama, no_telp, email, password, confirm_password)
+        alert('success');
+        navigate('/login');
+      }
+      else {
+        alert(responseData.error)
+      }
     } catch (error) {
-      alert(error);
+      console.log(error)
     } 
   };
 
   return (
     <form onSubmit={submit}>
-      <h1 className="h3 mb-3 fw-normal">Please register</h1>
+      <h1 className="h3 mb-4 fw-normal">Please register</h1>
 
       <input
         className="form-control"
@@ -67,6 +73,14 @@ const Register = () => {
         placeholder="Password"
         required
         onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <input
+        type="password"
+        className="form-control"
+        placeholder="Confirm Password"
+        required
+        onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
       <button className="w-100 btn btn-lg btn-primary" type="submit">

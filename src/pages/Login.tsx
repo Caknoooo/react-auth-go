@@ -10,8 +10,7 @@ const Login = (props: { setName: (name: string) => void }) => {
     e.preventDefault();
 
     try {
-      await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/login", {
-        mode: "cors",
+      const response = await fetch("http://localhost:8888/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,10 +20,11 @@ const Login = (props: { setName: (name: string) => void }) => {
           password,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
-      alert('Berhasil Login');
+      const responseData = await response.json()
+      if (response.ok) {
+        localStorage.setItem("token", responseData.data.token)
+        alert('Berhasil Login');
+      }
     } catch (error) {
       alert(error);
     } 

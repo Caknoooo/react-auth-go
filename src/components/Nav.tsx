@@ -2,12 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Nav = (props: { nama: string; setName: (nama: string) => void }) => {
-  const logout = async () => {
-    await fetch("https://fundraisingbackendrpl-production.up.railway.app/api/user/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+  const logout = () => {
+    localStorage.removeItem("token");
 
     props.setName("");
   };
